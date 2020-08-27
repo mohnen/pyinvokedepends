@@ -1,0 +1,9 @@
+venv
+dist
+*.egg-info
+*.pyc
+build
+.coverage
+.tox
+docs/_build
+*.backup
