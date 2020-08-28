@@ -3,7 +3,7 @@ import re
 import setuptools
 
 NAME             = "pyinvokedepends"
-AUTHOR           = "Christophe VG"
+AUTHOR           = "Markus Mohnen"
 AUTHOR_EMAIL     = "markus.mohnen@gmail.com"
 DESCRIPTION      = "Extends pythonic task management & command execution with file dependencies."
 LICENSE          = "MIT"
@@ -11,17 +11,17 @@ KEYWORDS         = "invoke, automation, tasks, make, dependencies"
 URL              = "https://github.com/mohnen/" + NAME
 README           = ".github/README.md"
 CLASSIFIERS      = [
-  
+
 ]
 INSTALL_REQUIRES = [
   "invoke",
-  
+
 ]
 ENTRY_POINTS = {
-  
+
 }
 SCRIPTS = [
-  
+
 ]
 
 HERE = os.path.dirname(__file__)
@@ -53,5 +53,6 @@ if __name__ == "__main__":
     install_requires=INSTALL_REQUIRES,
     entry_points=ENTRY_POINTS,
     scripts=SCRIPTS,
-    include_package_data=True    
+    include_package_data=True,
+    python_requires='>=3.6'
   )

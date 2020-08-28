@@ -1,18 +1,44 @@
 # Extends pythonic task management & command execution with file dependencies.
 
-> 
+>
 
 [![Latest Version on PyPI](https://img.shields.io/pypi/v/pyinvokedepends.svg)](https://pypi.python.org/pypi/pyinvokedepends/)
 [![Supported Implementations](https://img.shields.io/pypi/pyversions/pyinvokedepends.svg)](https://pypi.python.org/pypi/pyinvokedepends/)
-[![Build Status](https://secure.travis-ci.org/mohnen/pyinvokedepends.svg?branch=master)](http://travis-ci.org/christophevg/pyinvokedepends)
-[![Documentation Status](https://readthedocs.org/projects/pyinvokedepends/badge/?version=latest)](https://pyinvokedepends.readthedocs.io/en/latest/?badge=latest)
-[![Coverage Status](https://coveralls.io/repos/github/mohnen/pyinvokedepends/badge.svg?branch=master)](https://coveralls.io/github/mohnen/pyinvokedepends?branch=master)
-[![Built with PyPi Template](https://img.shields.io/badge/PyPi_Template-v0.1.1-blue.svg)](https://github.com/christophevg/pypi-template)
-
 
 
 ## Documentation
 
-Visit [Read the Docs](https://pyinvokedepends.readthedocs.org) for the full documentation, including overviews and several examples.
+`pyinvokedepends` is an extension of [pyinvoke](https://www.pyinvoke.org/) to allow more "makefile" like task definitions.
 
+It introduces an additional decorator `@depends` which can be used in addtion to [pyinvoke](https://www.pyinvoke.org/)'s decorator `@task`. Adding this decorator with parameters for `to` and `creates` to a task in a `tasks.py` file will make sure that the task is only executed when any of the files from `to` are newer than at least one file from `created`.
 
+For a simple example, consider the following `tasks.py`. In contrast to tradition `make`, this will always run `gcc hello.c`
+
+```
+from invoke import task
+@task
+def compile(c):
+  c.run("gcc hello.c", echo=True)
+```
+
+With `pyinvokedepends` we can add dependencies:
+
+It does not automatically add `pre` or `post` steps to the task based on the dependencies.
+
+from invoke import task
+from pyinvokedepends import depends
+
+```
+@depends(on=["./hello.c"], creates=["./a.out"])
+@task
+def test(c):
+def compile(c):
+  c.run("gcc hello.c", echo=True)
+```
+
+The task will only execute if the file `./hello.c` is newer than the file `./a.out`. Otherwise, the execution will be skipped.
+
+The values of the parameters `on` and `creates` are lists of [`globs`](https://docs.python.org/3/library/glob.html). At lease one the files matching (one of) the `on` globs must exist. The task is executed
++ if no file exists which matches (any of) the `creates` globs, or
++ one of the files matching the `on` globs is newer than at least one file of the `creates` globs.
+  
