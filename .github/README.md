@@ -1,7 +1,7 @@
 # Extends pythonic task management & command execution with file dependencies.
 
 >
-
+ 
 [![Latest Version on PyPI](https://img.shields.io/pypi/v/pyinvokedepends.svg)](https://pypi.python.org/pypi/pyinvokedepends/)
 [![Supported Implementations](https://img.shields.io/pypi/pyversions/pyinvokedepends.svg)](https://pypi.python.org/pypi/pyinvokedepends/)
 
