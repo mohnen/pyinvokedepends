@@ -10,9 +10,9 @@
 
 `pyinvokedepends` is an extension of [pyinvoke](https://www.pyinvoke.org/) to allow more "makefile" like task definitions.
 
-It introduces an additional decorator `@depends` which can be used in addtion to [pyinvoke](https://www.pyinvoke.org/)'s decorator `@task`. Adding this decorator with parameters for `to` and `creates` to a task in a `tasks.py` file will make sure that the task is only executed when any of the files from `to` are newer than at least one file from `created`.
+It introduces an additional decorator `@depends` which can be used in addtion to [pyinvoke](https://www.pyinvoke.org/)'s decorator `@task`. Adding this decorator to a task will make sure that the task is only executed when any of `to` files is newer than one of the `created` files.
 
-For a simple example, consider the following `tasks.py`. In contrast to tradition `make`, this will always run `gcc hello.c`
+For a simple example, consider the following `tasks.py`. In contrast to traditional `make`, this will always run `gcc hello.c`
 
 ```
 from invoke import task
@@ -23,12 +23,9 @@ def compile(c):
 
 With `pyinvokedepends` we can add dependencies:
 
-It does not automatically add `pre` or `post` steps to the task based on the dependencies.
-
+```
 from invoke import task
 from pyinvokedepends import depends
-
-```
 @depends(on=["./hello.c"], creates=["./a.out"])
 @task
 def test(c):
@@ -41,4 +38,5 @@ The task will only execute if the file `./hello.c` is newer than the file `./a.o
 The values of the parameters `on` and `creates` are lists of [`globs`](https://docs.python.org/3/library/glob.html). At lease one the files matching (one of) the `on` globs must exist. The task is executed
 + if no file exists which matches (any of) the `creates` globs, or
 + one of the files matching the `on` globs is newer than at least one file of the `creates` globs.
-  
+
+It does not automatically add `pre` or `post` steps to the task based on the dependencies.
