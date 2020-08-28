@@ -5,6 +5,14 @@
 [![Latest Version on PyPI](https://img.shields.io/pypi/v/pyinvokedepends.svg)](https://pypi.python.org/pypi/pyinvokedepends/)
 [![Supported Implementations](https://img.shields.io/pypi/pyversions/pyinvokedepends.svg)](https://pypi.python.org/pypi/pyinvokedepends/)
 
+## Installation
+
+The recommended way is to install the latest stable release via pip:
+```
+pip install pyinvokedepends
+```
+
+It's 2020, I only support Python 3.6+.
 
 ## Documentation
 
